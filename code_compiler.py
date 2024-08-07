@@ -63,3 +63,15 @@ class CodeCompiler:
                     
                     # Copy the compiled file to the destination directory
                     shutil.copy2(file_path, dest_path)
+                    
+        # Remove .pyc files from the source directory
+        self.clean_source_directory()
+
+    def clean_source_directory(self):
+        """
+        Remove .pyc files from the source directory, keeping them only in __pycache__ directories.
+        """
+        for root, dirs, files in os.walk(self.src):
+            for file in files:
+                if file.endswith('.pyc') and '__pycache__' not in root:
+                    os.remove(os.path.join(root, file))
